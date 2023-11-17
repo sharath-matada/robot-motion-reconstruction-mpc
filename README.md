@@ -1,4 +1,4 @@
-## Model Predictive Control Reconstruction of Robot Motion from video 
+## Model Predictive Control for quadrupeds - Reconstruction of Robot Motion from video 
 - Based on Robotoc(https://github.com/mayataka/robotoc) modified to handle user-defined waypoints for feet in task space and entire body in configuration space
 
 ## Requirements
