@@ -26,11 +26,11 @@ swing_start_time = 0.5
 vcom_cmd = 0.5 * step_length / (swing_time+stance_time)
 yaw_rate_cmd = step_yaw / (swing_time+stance_time)
 
-T = 0.5
-N = 20
-mpc = robotoc.MPCTrot(robot, T, N)
+T = 0.5 #Parameters for MPC
+N = 20 
+mpc = robotoc.MPCTrot(robot, T, N)  #Setting up the MPC, T is the horizon and N is th
 
-planner = robotoc.TrotFootStepPlanner(robot)
+planner = robotoc.TrotFootStepPlanner(robot) #Setting up the planner
 planner.set_gait_pattern(step_length, (step_yaw*swing_time), (stance_time > 0.))
 mpc.set_gait_pattern(planner, swing_height, swing_time, stance_time, swing_start_time)
 
@@ -58,8 +58,8 @@ camera_settings = CameraSettings(camera_distance=2.0, camera_yaw=45, camera_pitc
                                  camera_target_pos=q0[0:3]+np.array([0.1, 0.5, 0.]))
 anymal_simulator.set_camera_settings(camera_settings=camera_settings)
 
-simulation_time = 10.0
-log = False
+simulation_time = 2.0
+log = True
 record = False
 simulation = MPCSimulation(simulator=anymal_simulator)
 simulation.run(mpc=mpc, t0=t0, q0=q0, simulation_time=simulation_time, 

@@ -169,9 +169,9 @@ void MPCPace::init(const double t, const Eigen::VectorXd& q,
   contact_sequence_->reserve(std::floor(T_/(swing_time_+stance_time_)));
   contact_sequence_->init(cs_standing_);
   bool add_step = addStep(t);
-  while (add_step) {
-    add_step = addStep(t);
-  }
+  // while (add_step) {
+  //   add_step = addStep(t);
+  // }
   foot_step_planner_->init(q);
   config_cost_->set_q_ref(q);
   base_rot_ref_ = std::make_shared<MPCPeriodicConfigurationRef>(q, swing_start_time_, 
@@ -209,6 +209,8 @@ void MPCPace::updateSolution(const double t, const double dt,
   assert(dt > 0);
   const bool add_step = addStep(t);
   const auto ts = contact_sequence_->eventTimes();
+  const auto n =  contact_sequence_->numContactPhases();
+  std::cout<<n;
   bool remove_step = false;
   if (!ts.empty()) {
     if (ts.front()+eps_ < t+dt) {

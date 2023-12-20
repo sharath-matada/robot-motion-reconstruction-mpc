@@ -18,7 +18,7 @@ dt = 0.02
 step_length = np.array([0.20, 0, 0])
 step_height = 0.1
 swing_time = 0.25
-double_support_time = 0.05
+double_support_time = 0.5
 t0 = double_support_time 
 cycle = 5
 
@@ -224,7 +224,8 @@ print(ocp_solver.get_solver_statistics())
 # num_iteration = 1000
 # robotoc.utils.benchmark.cpu_time(ocp_solver, t, q, v, num_iteration)
 
-viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='gepetto')
+np.savetxt('torque.txt',ocp_solver.get_solution('u'),delimiter=",")
+viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='meshcat')
 viewer.set_contact_info(mu=mu)
 time_discretization = ocp_solver.get_time_discretization()
 viewer.display(ocp_solver.get_time_discretization(), 

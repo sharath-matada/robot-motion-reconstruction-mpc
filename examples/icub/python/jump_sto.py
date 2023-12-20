@@ -12,7 +12,7 @@ model_info.surface_contacts = [robotoc.ContactModelInfo('l_sole', baumgarte_time
 robot = robotoc.Robot(model_info)
 
 dt = 0.02
-jump_length = np.array([0.5, 0, 0])
+jump_length = np.array([0.5, 0.3, 0])
 flying_time = 0.25
 ground_time = 0.7
 t0 = 0.
@@ -24,8 +24,8 @@ q_standing = np.array([0, 0, 0.592, 0, 0, 1, 0,
                        0, 0, 0, # torso
                        0, 0.35, 0.5, 0.5, 0, 0, 0, # left arm 
                        0, 0.35, 0.5, 0.5, 0, 0, 0]) # right arm 
-q_ref = q_standing.copy()
-q_ref[0:3] += jump_length
+# q_ref = q_standing.copy()
+# q_ref[0:3] += jump_length
 q_weight = np.array([0, 1, 1, 100, 100, 100, 
                      0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 
                      0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 
@@ -135,7 +135,7 @@ print("KKT error after convergence: ", ocp_solver.KKT_error(t, q, v))
 print(ocp_solver.get_solver_statistics())
 
 # Display results
-viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='gepetto')
+viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='meshcat')
 viewer.set_contact_info(mu=mu)
 viewer.display(ocp_solver.get_time_discretization(), 
                ocp_solver.get_solution('q'), 

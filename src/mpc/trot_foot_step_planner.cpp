@@ -54,7 +54,10 @@ void TrotFootStepPlanner::setGaitPattern(const Eigen::Vector3d& step_length,
   step_length_ = step_length;
   R_yaw_<< std::cos(step_yaw), -std::sin(step_yaw), 0, 
            std::sin(step_yaw), std::cos(step_yaw),  0,
-           0, 0, 1;
+           0, 0, 1; 
+R_yaw1_<< std::cos(step_yaw), -std::sin(step_yaw), 0, 
+           std::sin(step_yaw), std::cos(step_yaw),  0,
+           0, 0, 1;              
   enable_stance_phase_ = enable_stance_phase;
   enable_raibert_heuristic_ = false;
 }
@@ -142,6 +145,8 @@ bool TrotFootStepPlanner::plan(const double t, const Eigen::VectorXd& q,
   }
   Eigen::Vector3d com = Eigen::Vector3d::Zero();
   Eigen::Matrix3d R = R_.front();
+  //std::cout << R;
+  //std::cout << "Current Step" << current_step_;
   if (contact_status.isContactActive(0) && contact_status.isContactActive(1) 
       && contact_status.isContactActive(2) && contact_status.isContactActive(3)) {
     if (enable_stance_phase_) {
@@ -162,13 +167,13 @@ bool TrotFootStepPlanner::plan(const double t, const Eigen::VectorXd& q,
     if (enable_stance_phase_) {
       if (current_step_%4 != 1) {
         ++current_step_;
-        R = (R_yaw_ * R).eval();
+        R = (R_yaw1_ * R).eval();
       }
     }
     else {
       if (current_step_%2 != 1) {
         ++current_step_;
-        R = (R_yaw_ * R).eval();
+        R = (R_yaw1_* R).eval();
       }
     }
     com.noalias() += contact_position[0];

@@ -17,10 +17,10 @@ robot = robotoc.Robot(model_info)
 dt = 0.02
 step_length = np.array([0.15, 0, 0])
 step_height = 0.1
-stance_time = 0.15
+stance_time = 0.5
 flying_time = 0.1
 t0 = stance_time
-cycle = 5
+cycle = 10
 
 # Create the cost function
 cost = robotoc.CostFunction()
@@ -201,7 +201,7 @@ print(ocp_solver.get_solver_statistics())
 # num_iteration = 1000
 # robotoc.utils.benchmark.cpu_time(ocp_solver, t, q, v, num_iteration)
 
-viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='gepetto')
+viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='meshcat')
 viewer.set_contact_info(mu=mu)
 viewer.display(ocp_solver.get_time_discretization(), 
                ocp_solver.get_solution('q'), 

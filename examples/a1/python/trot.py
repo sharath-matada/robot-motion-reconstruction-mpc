@@ -14,7 +14,7 @@ model_info.point_contacts = [robotoc.ContactModelInfo('FL_foot', baumgarte_time_
                              robotoc.ContactModelInfo('RR_foot', baumgarte_time_step)]
 robot = robotoc.Robot(model_info)
 
-dt = 0.02
+dt = 0.0025
 step_length = np.array([0.15, 0, 0])
 step_height = 0.1
 swing_time = 0.25
@@ -201,10 +201,12 @@ ocp_solver.solve(t, q, v)
 print("KKT error after convergence: ", ocp_solver.KKT_error(t, q, v))
 print(ocp_solver.get_solver_statistics())
 
+np.save('ocp_trot_ocp',ocp_solver.get_solution('u'))
+
 # num_iteration = 1000
 # robotoc.utils.benchmark.cpu_time(ocp_solver, t, q, v, num_iteration)
 
-viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='gepetto')
+viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='meshcat')
 viewer.set_contact_info(mu=mu)
 viewer.display(ocp_solver.get_time_discretization(), 
                ocp_solver.get_solution('q'), 

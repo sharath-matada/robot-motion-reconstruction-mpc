@@ -19,10 +19,10 @@ MPCCrawl::MPCCrawl(const Robot& robot, const double T, const int N)
                 SolverOptions()), 
     solver_options_(SolverOptions()),
     cs_standing_(robot.createContactStatus()),
-    cs_lf_(robot.createContactStatus()),
-    cs_lh_(robot.createContactStatus()),
-    cs_rf_(robot.createContactStatus()),
-    cs_rh_(robot.createContactStatus()),
+    cs_123_(robot.createContactStatus()),
+    cs_023_(robot.createContactStatus()),
+    cs_013_(robot.createContactStatus()),
+    cs_012_(robot.createContactStatus()),
     swing_height_(0),
     swing_time_(0),
     stance_time_(0),
@@ -98,16 +98,16 @@ MPCCrawl::MPCCrawl(const Robot& robot, const double T, const int N)
   constraints_->push_back(friction_cone_);
   // init contact status
   cs_standing_.activateContacts(std::vector<int>({0, 1, 2, 3}));
-  cs_lf_.activateContacts(std::vector<int>({1, 2, 3}));
-  cs_lh_.activateContacts(std::vector<int>({0, 2, 3}));
-  cs_rf_.activateContacts(std::vector<int>({0, 1, 3}));
-  cs_rh_.activateContacts(std::vector<int>({0, 1, 2}));
+  cs_123_.activateContacts(std::vector<int>({1, 2, 3}));
+  cs_023_.activateContacts(std::vector<int>({0, 2, 3}));
+  cs_013_.activateContacts(std::vector<int>({0, 1, 3}));
+  cs_012_.activateContacts(std::vector<int>({0, 1, 2}));
   const double friction_coefficient = 0.5;
   cs_standing_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
-  cs_lf_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
-  cs_lh_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
-  cs_rf_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
-  cs_rh_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
+  cs_123_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
+  cs_023_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
+  cs_013_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
+  cs_012_.setFrictionCoefficients(std::vector<double>(4, friction_coefficient));
 }
 
 
@@ -299,7 +299,7 @@ void MPCCrawl::setRobotProperties(const RobotProperties& properties) {
 bool MPCCrawl::addStep(const double t) {
   if (predict_step_ == 0) {
     if (swing_start_time_ < t+T_-dtm_) {
-      contact_sequence_->push_back(cs_rh_, swing_start_time_);
+      contact_sequence_->push_back(cs_123_, swing_start_time_);
       ++predict_step_;
       return true;
     }
@@ -324,16 +324,16 @@ bool MPCCrawl::addStep(const double t) {
       }
       if (tt < t+T_-dtm_) {
         if (predict_step_%8 == 0) {
-          contact_sequence_->push_back(cs_rh_, tt);
+          contact_sequence_->push_back(cs_012_, tt);
         }
         else if (predict_step_%8 == 2) {
-          contact_sequence_->push_back(cs_rf_, tt);
+          contact_sequence_->push_back(cs_013_, tt);
         }
         else if (predict_step_%8 == 4) {
-          contact_sequence_->push_back(cs_lh_, tt);
+          contact_sequence_->push_back(cs_023_, tt);
         }
         else if (predict_step_%8 == 6) {
-          contact_sequence_->push_back(cs_lf_, tt);
+          contact_sequence_->push_back(cs_123_, tt);
         }
         else {
           contact_sequence_->push_back(cs_standing_, tt);
@@ -350,16 +350,16 @@ bool MPCCrawl::addStep(const double t) {
       }
       if (tt < t+T_-dtm_) {
         if (predict_step_%4 == 0) {
-          contact_sequence_->push_back(cs_rh_, tt);
+          contact_sequence_->push_back(cs_012_, tt);
         }
         else if (predict_step_%4 == 1) {
-          contact_sequence_->push_back(cs_rf_, tt);
+          contact_sequence_->push_back(cs_013_, tt);
         }
         else if (predict_step_%4 == 2) {
-          contact_sequence_->push_back(cs_lh_, tt);
+          contact_sequence_->push_back(cs_023_, tt);
         }
         else if (predict_step_%4 == 3) {
-          contact_sequence_->push_back(cs_lf_, tt);
+          contact_sequence_->push_back(cs_123_, tt);
         }
         ++predict_step_;
         return true;

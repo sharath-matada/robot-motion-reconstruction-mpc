@@ -203,7 +203,7 @@ print(ocp_solver.get_solver_statistics())
 # num_iteration = 1000
 # robotoc.utils.benchmark.cpu_time(ocp_solver, t, q, v, num_iteration)
 
-viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='gepetto')
+viewer = robotoc.utils.TrajectoryViewer(model_info=model_info, viewer_type='meshcat')
 viewer.set_contact_info(mu=mu)
 viewer.display(ocp_solver.get_time_discretization(), 
                ocp_solver.get_solution('q'), 

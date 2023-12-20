@@ -45,7 +45,7 @@ void PeriodicSwingFootRef::setFootTrackRef(const Eigen::Vector3d& x3d0,
 
 
 void PeriodicSwingFootRef::updateRef(const GridInfo& grid_info,
-                                          Eigen::VectorXd& x3d_ref) const {
+                                          Eigen::VectorXd& x3d_ref) const {                                         
   if (grid_info.t < t0_+period_swing_) {
     const double rate = (grid_info.t-t0_) / period_swing_;
     x3d_ref = x3d0_;
