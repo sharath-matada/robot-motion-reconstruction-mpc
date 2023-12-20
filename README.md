@@ -1,4 +1,4 @@
-## Model Predictive Control Reconstruction of Robot Motion from video 
+## Model Predictive Control for quadrupeds - Reconstruction of Robot Motion from video 
 - Based on Robotoc(https://github.com/mayataka/robotoc) modified to handle user-defined waypoints for feet in task space and entire body in configuration space
 
 ## Requirements
@@ -9,3 +9,5 @@
 - [gepetto-viewer-corba](https://github.com/Gepetto/gepetto-viewer-corba.git) and/or [meshcat-python](https://github.com/rdeits/meshcat-python) (optional to visualize the solution trajectory in Python) 
 - [pinocchio-gepetto-viewer](https://github.com/stack-of-tasks/pinocchio-gepetto-viewer) (optional to visualize the solution trajectory in C++) 
 - [PyBullet](https://pybullet.org/wordpress/) (optional to simulate MPC examples)
+
+
