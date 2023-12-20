@@ -10,4 +10,7 @@
 - [pinocchio-gepetto-viewer](https://github.com/stack-of-tasks/pinocchio-gepetto-viewer) (optional to visualize the solution trajectory in C++) 
 - [PyBullet](https://pybullet.org/wordpress/) (optional to simulate MPC examples)
 
+## Example of Motions with User Defined Waypoints(Dancing)
+<img src="gifs/go1robot.gif" width="140"> &nbsp;
+
 
