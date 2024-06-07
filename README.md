@@ -1,4 +1,5 @@
 ## Model Predictive Control for quadrupeds - Reconstruction of Robot Motion from video 
+- This work is about reconstructing robot motion from video by pose estimation using keypoint detection and implementation on real robot using MPC
 - Based on Robotoc(https://github.com/mayataka/robotoc) modified to handle user-defined waypoints for feet in task space and entire body in configuration space
 
 ## Requirements
@@ -11,6 +12,10 @@
 - [PyBullet](https://pybullet.org/wordpress/) (optional to simulate MPC examples)
 
 ## Example of Motions with User Defined Waypoints(Dancing)
-<img src="gifs/go1robot.gif" width="140"> &nbsp;
+- Keypoint detection on quadruped and pose estimation
+<img src="gifs/poseestimation.gif" width="140">
+- Simulation of estimated poses on quadrupeds on real robot
+<img src="gifs/go1robot.gif" width="140">
+
 
 
